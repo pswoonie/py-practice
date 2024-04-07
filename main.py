@@ -1,3 +1,8 @@
-from modules.my_module import my_func
+import modules.my_module as mymo
+# from modules.my_module import *
+# from modules.my_module import my_func, PI
 
-my_func()
+# print(mymo.PI)
+mymo.my_func()
+# print(PI)
+# my_func()
