@@ -1,6 +1,8 @@
+# This is the main execution file
+
 import pandas as pd
 # import numpy as np
-# import matplotlib.pyplot as plt
+import matplotlib.pyplot as plt
 
 import os.path
 
@@ -10,6 +12,7 @@ from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 
+from modules.dijkstra import dijkstra_func
 from modules.table_to_map import tableToMap
 
 # If modifying these scopes, delete the file token.json.
@@ -68,8 +71,9 @@ def main():
 
     table = pd.DataFrame(values, index=row_index, columns=col_list)
 
-    tb = tableToMap(table)
-    print(tb)
+    graph = tableToMap(table)
+    shortest_path = dijkstra_func(graph, 'A')
+    print(shortest_path)
   except HttpError as err:
     print(err)
 
