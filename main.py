@@ -2,7 +2,7 @@
 
 import pandas as pd
 # import numpy as np
-import matplotlib.pyplot as plt
+# import matplotlib.pyplot as plt
 
 import os.path
 
@@ -13,6 +13,7 @@ from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 
 from modules.dijkstra import dijkstra_func
+from modules.find_shortest_path import show_path
 from modules.table_to_map import tableToMap
 
 # If modifying these scopes, delete the file token.json.
@@ -21,6 +22,13 @@ SCOPES = ["https://www.googleapis.com/auth/spreadsheets.readonly"]
 # The ID and range of a sample spreadsheet.
 SAMPLE_SPREADSHEET_ID = "12jnThmcea4x_in19FOEgHQ91YJKmdMBT2ENfdsrTVlk"
 SAMPLE_RANGE_NAME = "sheet1!A1:G7"
+
+def _get_keyboard_input():
+  print('--Choose from: A B C D E F')
+  start = input('>> Enter starting node: ')
+  end = input(">> Enter destination: ")
+  return {'start': start, 'end': end}
+
 
 def main():
   """Shows basic usage of the Sheets API.
@@ -72,8 +80,11 @@ def main():
     table = pd.DataFrame(values, index=row_index, columns=col_list)
 
     graph = tableToMap(table)
-    shortest_path = dijkstra_func(graph, 'A')
-    print(shortest_path)
+
+    course_set: dict = _get_keyboard_input()
+
+    shortest_path = dijkstra_func(graph, course_set['start'])
+    show_path(shortest_path, course_set)
   except HttpError as err:
     print(err)
 
