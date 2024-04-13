@@ -23,6 +23,7 @@ def tableToMap(*args):
       value = int(table[key1][key2])
       graph.setdefault(key1, {}).setdefault(key2, value)
 
+  # print(graph)
   return graph
 
 if __name__ == "__main__":

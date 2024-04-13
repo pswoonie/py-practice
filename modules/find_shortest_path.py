@@ -12,7 +12,7 @@ def show_path(*args):
     _from: str = nodes[curr]
 
     while True:
-        if _from == None: break
+        if _from is None: break
         curr = _from
         _from = nodes[curr]
         dest_stack.append(curr)
